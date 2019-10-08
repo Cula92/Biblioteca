@@ -1,6 +1,7 @@
 	package com.accenture.biblio.dao;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -24,15 +25,14 @@ public class PrestitoDAOImpl implements PrestitiDAO{
 		
     @SuppressWarnings("unchecked")
 	@Override
-    public List < Prestito > getPrestiti(String codiceISBN) {
+    public Prestito getPrestiti(String codiceISBN) {
         Session session = sessionFactory.getCurrentSession();
         CriteriaBuilder cb = session.getCriteriaBuilder();
         CriteriaQuery < Prestito > cq = cb.createQuery(Prestito.class);
         Root < Prestito > root = cq.from(Prestito.class);
-        cq.select(root);
-        cq.select(root).where(cb.equal(root.get("codice_ISBN"), codiceISBN));
+        cq.select(root).where(cb.and(cb.equal(root.get("codice_ISBN"), codiceISBN), cb.isNull(root.get("data_Restituzione"))));
         Query query = session.createQuery(cq);
-        return query.getResultList();
+        return (Prestito) query.getResultList().get(0);
     }
 	
 	@Override

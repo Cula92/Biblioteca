@@ -23,7 +23,7 @@ public class PrestitiServiceImpl implements PrestitiService{
 	
 	@Override
     @Transactional
-    public List <Prestito> getPrestiti(String codiceISBN) {
+    public Prestito getPrestiti(String codiceISBN) {
     	return prestitiDAO.getPrestiti(codiceISBN);
     }
 }

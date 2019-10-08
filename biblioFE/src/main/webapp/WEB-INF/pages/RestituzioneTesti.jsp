@@ -58,11 +58,11 @@
 			<div class="row justify-content-center">
 				<div class="col-md-8">
 					<div class="card">
-						<div class="card-header">Inserimento nuovo testo</div>
+						<div class="card-header">Restituzione testi</div>
 
 						<div class="card-body">
 							<form @submit="formSubmit">
-
+								 <strong>Testi in prestito:</strong>
 								<select v-model="codice_ISBN" class="form-control">
 									<option selected disabled hidden>Seleziona testo da
 										restituire:</option>
@@ -72,7 +72,7 @@
 									class="form-control" v-model="data_Restituzione"
 									required="required"><br>
 
-								<button class="btn btn-success">Submit</button>
+								<button class="btn btn-success" :disabled="codice_ISBN == ''">Submit</button>
 
 							</form>
 						</div>
@@ -117,6 +117,7 @@ new Vue({
                     currentObj.info = response.data;
                     currentObj.toast(currentObj.info.messaggio, currentObj.info.tipoMessaggio);
                     if(currentObj.info.tipoMessaggio == 'success'){
+                    	currentObj.codice_ISBN = '';
                     	axios
             		      .get('http://localhost:8080/biblioFE/getTestiInPrestito')
             		      .then(response => (currentObj.infoTesti = response.data))	

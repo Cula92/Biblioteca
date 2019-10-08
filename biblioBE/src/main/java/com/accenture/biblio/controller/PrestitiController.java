@@ -37,26 +37,21 @@ public class PrestitiController {
 	@RequestMapping(value = "/restituzioneTesto", method = RequestMethod.POST, headers = "Accept=application/json")
     public Result restituzioneTesto(@RequestBody Parametro parametro) {	
 		Result result = new Result();
-		Prestito prestitoDao = new Prestito();
 		Testo testoDao;
 		Socio socioDao;
 		Date data = new Date(System.currentTimeMillis());
-		List<Prestito> prestiti = prestitiService.getPrestiti(parametro.getParametroRicerca());
+		Prestito prestito = prestitiService.getPrestiti(parametro.getParametroRicerca());
 		
-		if(!prestiti.isEmpty()) {
-				//prestitoDao.setCodice_ISBN(prestiti.get(0).getCodice_ISBN());
-				//prestitoDao.setNumero_Tessera(prestiti.get(0).getNumero_Tessera());
-				//prestitoDao.setData_Prestito(prestiti.get(0).getData_Prestito());
-				//prestitoDao.setData_Scadenza(prestiti.get(0).getData_Scadenza());
-				prestiti.get(0).setData_Restituzione(data);
+		if(prestito != null) {
+				prestito.setData_Restituzione(data);
 				
-				testoDao = testiService.getTesto(prestiti.get(0).getCodice_ISBN());
+				testoDao = testiService.getTesto(prestito.getCodice_ISBN());
 				testoDao.setFlag_Prestito(0);
 				
-				socioDao = sociService.getSocio(prestiti.get(0).getNumero_Tessera());
+				socioDao = sociService.getSocio(prestito.getNumero_Tessera());
 				socioDao.setTesti_Prestito(socioDao.getTesti_Prestito() - 1);
 				
-				prestitiService.savePrestito(prestiti.get(0));
+				prestitiService.savePrestito(prestito);
 				sociService.updatePrestitoSocio(socioDao);
 		    	testiService.updateTesto(testoDao);
 		    		

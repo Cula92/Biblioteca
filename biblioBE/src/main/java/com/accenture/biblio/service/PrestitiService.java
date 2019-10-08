@@ -8,5 +8,5 @@ public interface PrestitiService {
 	
 	public Boolean savePrestito(Prestito prestito);
 	
-	public List <Prestito> getPrestiti(String codiceISBN);
+	public Prestito getPrestiti(String codiceISBN);
 }

@@ -8,5 +8,5 @@ public interface PrestitiDAO {
 	
 	public Boolean savePrestito(Prestito prestito);
 	
-	public List <Prestito> getPrestiti(String codiceISBN);
+	public Prestito getPrestiti(String codiceISBN);
 }

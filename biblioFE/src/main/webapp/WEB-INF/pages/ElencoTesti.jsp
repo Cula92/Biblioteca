@@ -261,9 +261,31 @@ new Vue({
                         currentObj.infoPrestito = response.data;
                         currentObj.toast(currentObj.infoPrestito.messaggio, currentObj.infoPrestito.tipoMessaggio);
                         if(currentObj.infoPrestito.tipoMessaggio == 'success'){
+                        	if(currentObj.tipoRicerca == 3){
                         	axios.get('http://localhost:8080/biblioFE/getTestiDisponibili')
                             .then(function (response) {
                                 currentObj.info = response.data;})
+                                }
+                        	else if(currentObj.tipoRicerca == 2){
+                        		axios.post('http://localhost:8080/biblioFE/getTestiByCodiceEditore', {
+                                	parametroRicerca: currentObj.parametroRicerca,
+                                	parametroRicerca1: currentObj.parametroRicerca1
+                                })
+                                .then(function (response) { 
+                                	currentObj.info = null;
+                                	currentObj.info = response.data;
+                                })
+                        	}
+                        	else if(currentObj.tipoRicerca == 1){
+                        		axios.post('http://localhost:8080/biblioFE/getTestiByAutoreTitolo', {
+                                	parametroRicerca: currentObj.parametroRicerca,
+                                	parametroRicerca1: currentObj.parametroRicerca1
+                                	})
+                                .then(function (response) {
+                                	currentObj.info = null;
+                                	currentObj.info = response.data;                            
+                                }) 
+                        	}
                         }
                     })
                 },
