@@ -90,9 +90,7 @@ public class TestiController {
 		   			testi.removeIf((Testo n) -> n.getLibro() == null);
 		   			testi.removeIf((Testo n) -> !(n.getTitolo().equalsIgnoreCase(titolo) & n.getLibro().getAutore().equalsIgnoreCase(autore)));
 		   		   }
-   		   
-   		//testi.removeIf((Testo n) -> ((!n.getTitolo().equalsIgnoreCase(autore) && n.getLibro() == null) || (!n.getTitolo().equalsIgnoreCase(autore) && !n.getLibro().getAutore().equalsIgnoreCase(autore))));
-   		return new ResponseEntity<List<Testo>>(testi, HttpStatus.OK);
+   		      		return new ResponseEntity<List<Testo>>(testi, HttpStatus.OK);
    	}
 	
 	@SuppressWarnings("null")
